@@ -1,12 +1,10 @@
-# Logs (Diary)
+# Diary of the project
 
 ### Usefull links:
 
 - [Create plugin](https://code.visualstudio.com/api/get-started/your-first-extension)
 - [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 - [VSCode API](https://code.visualstudio.com/api)
-
----
 
 # 24.03.2023 | Zahájení projektu
 
@@ -51,8 +49,6 @@ $ vsce publish # <publisherID>.myExtension published to VS Code Marketplace
 
 ```
 
----
-
 # 12.04.2023 | Basic functionality for plugin
 
 > **Do basic functionality for plugin suppotring:**
@@ -91,3 +87,9 @@ _The method takes 3 arguments:_
 - `triggerCharacters` - An optional array of characters that when pressed while typing should trigger completion.
 
 _Note:_ I used:`{ scheme: 'file', language: '*' }` selector for select all files and all languages. And I used `triggerCharacters` for `@ei-` prefix.
+
+## Showing information about marked element
+
+TODO:
+
+May be I can using [registerHoverProvider](https://code.visualstudio.com/api/references/vscode-api#languages.registerHoverProvider) for showing information about marked element.
