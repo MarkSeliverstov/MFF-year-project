@@ -1,10 +1,12 @@
 # Year Project
 
-- **Tématem** projektu je rozšíření pro VScode, které by umožnilo pohodlné vyhledávání a práci se stejnými (propojenými) entitami v různých podprogramech.
+- **The theme** of the project is an extension for VScode, which would allow convenient search and work with the same (linked) entities in different subroutines.
 
-- **Problém** je, že pokud máme velký projekt, tak abychom našli určitou entitu, musíme projít každý soubor a hledat tu entit a její souvislosti, což je nepříjemné a pomalé, pokud máme velký projekt.
-Řešení by to mělo umožnit rychle a jednoduše
+- **The problem** is that if we have a large project, then to find a particular entity, we have to go through each file and look for that entity and its context, which is annoying and slow if we have a large project.
+  The solution should make this possible quickly and simply
 
-- **Cílem** projektu je vymyslet a implementovat program, který by parsil projekt a umožnil využití vytvořených entit ve velkém projektu
+- **The goal** of the project is to invent and implement a program that would parsil the project and allow the use of created entities in a large project
 
 ---
+
+## Entity Inspector - VSCode Extension
