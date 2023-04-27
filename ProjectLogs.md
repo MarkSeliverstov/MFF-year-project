@@ -108,7 +108,7 @@ registerCompletionItemProvider (
     ): Disposable
 ```
 
-_Note:_ I used:`{pattern: "**"}` for _selector_ and `"."` for _triggerCharacters_ for using this provider in all files and for calling it when user press `Ctrl+Space`.
+_Note:_ I used:`{pattern: "**"}` for _selector_ and `@ei-` for _triggerCharacters_ for using this provider in all files and for calling it when user press `Ctrl+Space`.
 
 ### Suggesting/hints when identifying existing entities
 
