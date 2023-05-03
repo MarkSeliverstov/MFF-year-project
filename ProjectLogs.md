@@ -84,6 +84,8 @@ Each of this methods takes 2 main arguments:
 
 - `provider` - An object that implements [completion item provider](https://code.visualstudio.com/api/references/vscode-api#CompletionItemProvider) interface.
 
+---
+
 ### Marking (Ctrl+Space)
 
 <img src="assets/marking.gif" alt="Marking using Ctrl+Space " width="500" />
@@ -130,9 +132,7 @@ registerInlineCompletionItemProvider (
 
 ### Showing of information about marked element
 
-<img src="assets/hover.gif" alt="Showing of information about marked element" width="500" />
-
-I used `registerHoverProvider` for showing of information about marked element:
+We can use `registerHoverProvider` for showing of information about marked element:
 
 - This method is called when the user **hovers over a symbol** in the editor.
 - The method should return a [hover](https://code.visualstudio.com/api/references/vscode-api#Hover) or a [thenable](https://code.visualstudio.com/api/references/vscode-api#Thenable) that resolves to such.
@@ -157,5 +157,10 @@ I used `registerCodeActionsProvider` for showing errors:
 
 # 26.04.2021 | Fetching data from server and motivation for plugin
 
-> This week I will think about how to fetch data from server in plugin and how to show it to user. <br>
+> This week I will think about how to fetch data from server in extension and how to show it to user. And I need to do memorization of data <br>
 > Also I will think about what motivates me to do this plugin.
+
+### Motivation
+
+I think that this plugin will be useful for developers, because it will help them to understand code faster and easier. <br>
+Also I think that this plugin will be useful for me, because I will learn how to create plugins for VSCode and I will learn how to use VSCode API.

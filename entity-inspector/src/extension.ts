@@ -1,59 +1,42 @@
 import * as vscode from 'vscode';
+import * as parser from './parser';
+import * as Providers from './providers';
+
+export class MyDiagnostic{
+	static diagnosticCollection = vscode.languages.createDiagnosticCollection('myDiagnostics');
+}
 
 // This method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
+	//let cache : EIClass[] = [];
 	console.log('Congratulations, your extension "entity-inspector" is now active!');
-	console.log('adding completion items...');
-	context.subscriptions.push(myRegisterCompletionItemProvider());
+	addDiagnostic(MyDiagnostic.diagnosticCollection);
+
+	console.log('adding completion items provider');
+	context.subscriptions.push(
+		vscode.languages.registerCompletionItemProvider(
+			{pattern: "**"}, // all files
+			new Providers.MarkerProvider()),
+			
+		vscode.languages.registerInlineCompletionItemProvider(
+			{pattern: "**"},
+			new Providers.SuggestionProvider()),
+	);
+
+	vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
+		console.log(`File saved: ${document.uri.fsPath}`);
+		parser.getEntitiesFromFile(document);
+	});
 }
 
 /*
- * Register a completion item provider for the current workspace for any languages
+ * TODO: Add memization of entityes from workspace
  */
-function myRegisterCompletionItemProvider(): vscode.Disposable {
-	const triggerSuffix = '@ei-';
-	const documentSelector = { scheme: 'file', language: '*' };
-	const _provideCompletionItems = {
-		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-		const completionItems: vscode.CompletionItem[] = [];
-		
-		// Check if the line starts with the trigger suffix
-		const linePrefix = document.lineAt(position).text.substring(0, position.character);
-		if (!linePrefix.endsWith(triggerSuffix)) {
-			console.log("Unknown prefix: " + linePrefix);
-			return completionItems;
-		}
-		console.log("Known prefix: " + linePrefix);
-
-		// Add basic completion items for all languages
-		completionItems.push(
-			new vscode.CompletionItem('class'),
-			new vscode.CompletionItem('atribute'),
-			new vscode.CompletionItem('method'),
-		);
-		
-		return completionItems;
-		}
-	};
-	return vscode.languages.registerCompletionItemProvider(documentSelector, _provideCompletionItems);
-}
-
-/*
- * TODO: Add entityes from a workspace to the completion items
- */
-function addEntityesFromWorkspace(completionItems: vscode.CompletionItem[], workspace: string) {
-	const parser = require('./parser');
-	let rootDirectory = vscode.workspace.rootPath;
-
-	parser.findEntityesInDir(rootDirectory);
-
+function memorizeEntityesFromWorkspace() : void {
 	// Listen for file save events
 	vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
 		console.log(`File saved: ${document.uri.fsPath}`);
-		parser.findEntityesInFile(document.uri.fsPath);
 	});
 
 	// Listen for file delete events
@@ -67,10 +50,47 @@ function addEntityesFromWorkspace(completionItems: vscode.CompletionItem[], work
 	});
 }
 
-/*
- * TODO: Register a completion item provider for the current workspace for entityes
- */
-function myRegisterHoverProvider(): vscode.Disposable { return new vscode.Disposable(() => {});}
+// Diagnostic of errors, warnings, infos and hints
+function addDiagnostic(diagnosticCollection: vscode.DiagnosticCollection) {
+	console.log('adding diagnostic');
+    vscode.workspace.onDidChangeTextDocument((event) => {
+        const text = event.document.getText();
+
+        let errors = text.matchAll(/ERROR/gi);
+		let warnings = text.matchAll(/WARN/gi);
+		let infos = text.matchAll(/INFO/gi);
+		let hints = text.matchAll(/HINT/gi);
+
+		let items: any[] = [];
+		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Error, "This is ERROR hover", errors, event));
+		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Warning, "This is WARNING hover", warnings, event));
+		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Information, "This is INFO hover", infos, event));
+		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Hint, "This is HINT hover", hints, event));
+		
+		diagnosticCollection.set(event.document.uri, items);
+    });
+}
+
+function addDiagnosticItems(kind: vscode.DiagnosticSeverity, message: string, mathItems: IterableIterator<RegExpMatchArray>, event: vscode.TextDocumentChangeEvent):
+	vscode.Diagnostic[] {
+
+	let items = [];
+	for (const match of mathItems) {
+		if (match.index === undefined) {
+			return [];
+		}
+		const startPos = event.document.positionAt(match.index);
+		const endPos = event.document.positionAt(match.index + match[0].length);
+		const range = new vscode.Range(startPos, endPos);
+		const diagnostic = new vscode.Diagnostic(range,message, kind);
+		items.push(diagnostic);
+	}
+	if (items.length === 0) {
+		return [];
+	}
+	return items;
+}
+
 
 // This method is called when your extension is deactivated
 export function deactivate() {}
