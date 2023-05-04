@@ -1,19 +1,21 @@
 import * as vscode from 'vscode';
 import * as parser from './parser';
 import * as Providers from './providers';
+import { EIClass } from './helpers';
 
-export class MyDiagnostic{
+class MyDiagnostic{
 	static diagnosticCollection = vscode.languages.createDiagnosticCollection('myDiagnostics');
 }
 
+let cache = new Map<string, EIClass>();
+
 // This method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
-
-	//let cache : EIClass[] = [];
 	console.log('Congratulations, your extension "entity-inspector" is now active!');
+	
+	memorizeEntityesFromWorkspace();
 	addDiagnostic(MyDiagnostic.diagnosticCollection);
 
-	console.log('adding completion items provider');
 	context.subscriptions.push(
 		vscode.languages.registerCompletionItemProvider(
 			{pattern: "**"}, // all files
@@ -25,34 +27,36 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-		console.log(`File saved: ${document.uri.fsPath}`);
-		parser.getEntitiesFromFile(document);
+		let entities = parser.getEntitiesFromFile(document.uri);
+		entities.forEach((entity) => {
+			cache.set(entity.name, entity);
+		});
 	});
+
+	vscode.workspace.onDidDeleteFiles((event: vscode.FileDeleteEvent) => {
+		memorizeEntityesFromWorkspace();
+	});
+
 }
 
-/*
- * TODO: Add memization of entityes from workspace
- */
+// memorize all entities from workspace
 function memorizeEntityesFromWorkspace() : void {
-	// Listen for file save events
-	vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-		console.log(`File saved: ${document.uri.fsPath}`);
-	});
-
-	// Listen for file delete events
-	vscode.workspace.onDidDeleteFiles((event: vscode.FileDeleteEvent) => {
-		console.log(`File deleted: ${event.files[0].fsPath}`);
-	});
-	
-	// Listen for file create events
-	vscode.workspace.onDidCreateFiles((event: vscode.FileCreateEvent) => {
-		console.log(`File created: ${event.files[0].fsPath}`);
+	cache.clear();
+	vscode.workspace.findFiles('**/*.*', '').then((result) => {
+		let countEntities = 0;
+		result.forEach((file) => {
+			parser.getEntitiesFromFile(file).forEach((entity) => {
+				cache.set(entity.name, entity);
+				countEntities++;
+			});
+		});
+		console.log(`Found ${result.length} files with ${countEntities} entities`);
+		console.log(cache);
 	});
 }
 
 // Diagnostic of errors, warnings, infos and hints
 function addDiagnostic(diagnosticCollection: vscode.DiagnosticCollection) {
-	console.log('adding diagnostic');
     vscode.workspace.onDidChangeTextDocument((event) => {
         const text = event.document.getText();
 
@@ -90,7 +94,6 @@ function addDiagnosticItems(kind: vscode.DiagnosticSeverity, message: string, ma
 	}
 	return items;
 }
-
 
 // This method is called when your extension is deactivated
 export function deactivate() {}

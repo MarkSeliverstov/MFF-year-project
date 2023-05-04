@@ -1,7 +1,5 @@
 import * as vscode from 'vscode';
 
-const diagnosticCollection = vscode.languages.createDiagnosticCollection('myExtension');
-
 export class MarkerProvider implements vscode.CompletionItemProvider {
     provideCompletionItems(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.CompletionItem[]> {
         const triggerSuffix = '@ei-';
@@ -18,7 +16,7 @@ export class MarkerProvider implements vscode.CompletionItemProvider {
 		// Add basic completion items for all languages
 		completionItems.push(
 			new vscode.CompletionItem('class'),
-			new vscode.CompletionItem('atribute'),
+			new vscode.CompletionItem('attribute'),
 			new vscode.CompletionItem('method'),
 		);
 		
