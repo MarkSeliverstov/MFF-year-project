@@ -170,7 +170,8 @@ fetch("https://api.github.com/users/github")
 
 ### Data memorization
 
-I think that I _parse_ data from workspace and I will memorize it in cache like `Map<string, EIClass>` where `string` is a path to file and `EIClass` is a class that contains information about entity.
+I think that I _parse_ data from workspace and I will memorize it in cache like `Map<string, EIClass>` where `string` is a path to file and `EIClass` is a class that contains information about entity. <br>
+Also we can memorize data in file, but I think that it is not a good idea, becouse we don't wont to create files in workspace.
 
 ```ts
 class EIClass {
