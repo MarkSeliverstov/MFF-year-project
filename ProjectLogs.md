@@ -76,7 +76,7 @@ I used _register provider_ methods for implementing functionality:
 `registerCompletionItemProvider` - for marking elements of entityes <br>
 `registerInlineCompletionItemProvider` - for suggesting/hints when identifying existing entities (maybe auto-writing like in Copilot) <br>
 `registerHoverProvider` - for showing of information about marked element <br>
-`registerCodeActionsProvider` - for showing errors
+`diagnosticCollection` - for showing errors
 
 Each of this methods takes 2 main arguments:
 
@@ -148,19 +148,48 @@ registerHoverProvider (
 
 <img src="assets/errors.gif" alt="Showing errors" width="500" />
 
-I used `registerCodeActionsProvider` for showing errors:
+I used `diagnosticCollection` for showing errors. That is a collection of diagnostics, such as errors or warnings, that belong to a source. <br>
 
-> TODO:
->
-> 1.  add gifs for each functionality
-> 2.  add description for showing errors functionality
+# 26.04.2021 | Fetching, memorization, motivation
 
-# 26.04.2021 | Fetching data from server and motivation for plugin
+> - I will think about how to fetch data from server in extension and how to show it to user. <br>
+> - I need to do data memorization <br>
+> - I will think about what motivates me to do this plugin.<br>
+> - I have to finish the previous tasks
 
-> This week I will think about how to fetch data from server in extension and how to show it to user. And I need to do memorization of data <br>
-> Also I will think about what motivates me to do this plugin.
+### Fetching data from server
+
+I think that I will use [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) for fetching data from server. <br>
+
+```ts
+// This is an example of using fetch
+fetch("https://api.github.com/users/github")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+```
+
+### Data memorization
+
+I think that I _parse_ data from workspace and I will memorize it in cache like `Map<string, EIClass>` where `string` is a path to file and `EIClass` is a class that contains information about entity.
+
+```ts
+class EIClass {
+  name: string;
+  fromFile: vscode.Uri;
+  // name of the atributes and methods
+  atributes: string[];
+  methods: string[];
+}
+```
 
 ### Motivation
 
-I think that this plugin will be useful for developers, because it will help them to understand code faster and easier. <br>
-Also I think that this plugin will be useful for me, because I will learn how to create plugins for VSCode and I will learn how to use VSCode API.
+Firstly, as software developers, our main goal is to write code efficiently. We spend a lot of time reading, analyzing, and understanding code, and this can be a daunting task, especially when we are dealing with large codebases. The Entity Inspektor extension aims to simplify this process by allowing developers to see all the entities in one place, making it easier to navigate through the codebase and find the information they need faster.
+
+Secondly, the Entity Inspektor extension provides a convenient way to manage entities. It enables developers to automatically generate an entity if they already have one in their code, saving them time and effort. Additionally, the plugin can hint about existing entities, making it easier to reuse code and avoid duplicating work.
+
+Finally, the Entity Inspektor extension promotes organization in code. It allows developers to see all the information about an entity in one place, making it easier to understand its purpose and function. This can lead to more maintainable code and better collaboration among team members.
+
+In summary, the Entity Inspektor extension for VSCode provides an efficient, convenient, and organized way to manage entities in code, ultimately making the development process smoother and more productive.
+
+> TODO: Think about vscode configs and how to use them in extension.
