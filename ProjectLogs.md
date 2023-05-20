@@ -6,6 +6,8 @@
 - [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 - [VSCode API](https://code.visualstudio.com/api)
 - [Examples of using VSCode API](https://github.com/microsoft/vscode-extension-samples)
+- [Škoda Petr](https://skodapetr.github.io/)
+- [Example of BACHELOR THESIS](https://dspace.cuni.cz/bitstream/handle/20.500.11956/174168/130333096.pdf?sequence=1&isAllowed=y)
 
 # 24.03.2023 | Start of the project
 
@@ -150,7 +152,7 @@ registerHoverProvider (
 
 I used `diagnosticCollection` for showing errors. That is a collection of diagnostics, such as errors or warnings, that belong to a source. <br>
 
-# 26.04.2021 | Fetching, memorization, motivation
+# 26.04.2023 | Fetching, memorization, motivation
 
 > - I will think about how to fetch data from server in extension and how to show it to user. <br>
 > - I need to do data memorization <br>
@@ -194,3 +196,58 @@ Finally, the Entity Inspektor extension promotes organization in code. It allows
 In summary, the Entity Inspektor extension for VSCode provides an efficient, convenient, and organized way to manage entities in code, ultimately making the development process smoother and more productive.
 
 > TODO: Think about vscode configs and how to use them in extension.
+
+# 17.05.2023 | Model and use cases of extension
+
+<img src="assets/Model.jpeg" alt="Model and use cases of EI" width="500" />
+
+### Creating a model of EI
+```mermaid
+flowchart LR
+	subgraph Project
+		Java -.similar entities.- HTML
+		HTML -.similar entities.- SQL
+		SQL -.similar entities.- Documentation
+		Documentation -.similar entities.- JSON
+	end
+	Extrakce((Extrakce))
+	Java --> Extrakce
+	HTML --> Extrakce
+	SQL --> Extrakce
+	Documentation --> Extrakce
+	JSON --> Extrakce
+	subgraph Model
+		EI-Java
+		EI-HTML
+		EI-SQL
+		EI-Documentaion
+		EI-JSON
+	end
+	Extrakce --> EI-Java
+	Extrakce --> EI-HTML
+	Extrakce --> EI-SQL
+	Extrakce --> EI-Documentaion
+	Extrakce --> EI-JSON
+	Model <==> Scheme_in/out
+```
+
+Some example of modeling data: [LinkML - Linked data Modeling Language (model your dana)](https://linkml.io/)
+
+**There are 2 ways how to create a model of EI:** <br>
+	1. Parse project and create a model of EI (and you can also create a scheme of Entities) <br>
+	2. Upload a scheme and create a model of EI
+
+### Use cases
+
+1. Comparing & validating (somewhere something is missing, something needs to be removed, something added)
+2. Help when writing annotations (**static** like lince or **dynamic** like copilot using a model of EI)
+3. Import/export existing entities (from project or from scheme)
+4. Browser for entities in vscode like a preview of .md files (searching, filtering, sorting, grouping, etc.)
+5. Generating code ([generating code with linkML](https://linkml.io/linkml/generators/index.html))
+	1. Synhronization of entities (from project or from scheme and define there is a genetaion of code)
+6. Help with CI/CD github actions (for example: check if there is a new version of scheme and if yes, then generate code)
+
+> TODOs for this weeks:
+> - TODO: Start writing documentation (related work)
+
+# 24.05.2023 |
