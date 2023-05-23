@@ -234,20 +234,22 @@ flowchart LR
 Some example of modeling data: [LinkML - Linked data Modeling Language (model your dana)](https://linkml.io/)
 
 **There are 2 ways how to create a model of EI:** <br>
-	1. Parse project and create a model of EI (and you can also create a scheme of Entities) <br>
+	1. Parse project and create small (?)files with only with entities. After that create a model of EI by comparing small files (and you can also create a scheme of Entities) <br>
 	2. Upload a scheme and create a model of EI
 
 ### Use cases
 
 1. Comparing & validating (somewhere something is missing, something needs to be removed, something added)
 2. Help when writing annotations (**static** like lince or **dynamic** like copilot using a model of EI)
-3. Import/export existing entities (from project or from scheme)
+3. Import/export existing entities (from another project(server) or from scheme)
 4. Browser for entities in vscode like a preview of .md files (searching, filtering, sorting, grouping, etc.)
 5. Generating code ([generating code with linkML](https://linkml.io/linkml/generators/index.html))
-	1. Synhronization of entities (from project or from scheme and define there is a genetaion of code)
+	- Synhronization of entities (from project or from scheme and define there is a genetaion of code)
 6. Help with CI/CD github actions (for example: check if there is a new version of scheme and if yes, then generate code)
 
 > TODOs for this weeks:
-> - TODO: Start writing documentation (related work)
+> - TODO: Start writing Bachelor Thesis (related work):
+> 	- Are there any similar extensions? If yes, what are they doing? What are their advantages and disadvantages? Comparing with some code helpers (copilot, lince, etc.), with ChatGPT. Compare with other tools for creating models (LinkML, etc.).
+
 
 # 24.05.2023 |
