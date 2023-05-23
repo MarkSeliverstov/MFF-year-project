@@ -199,7 +199,7 @@ In summary, the Entity Inspektor extension for VSCode provides an efficient, con
 
 # 17.05.2023 | Model and use cases of extension
 
-<img src="assets/Model.jpeg" alt="Model and use cases of EI" width="500" />
+<img src="assets/model.jpeg" alt="Model and use cases of EI" width="500" />
 
 ### Creating a model of EI
 ```mermaid
