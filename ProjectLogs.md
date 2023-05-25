@@ -187,13 +187,13 @@ class EIClass {
 
 ### Motivation
 
-Firstly, as software developers, our main goal is to write code efficiently. We spend a lot of time reading, analyzing, and understanding code, and this can be a daunting task, especially when we are dealing with large codebases. The Entity Inspektor extension aims to simplify this process by allowing developers to see all the entities in one place, making it easier to navigate through the codebase and find the information they need faster.
+Firstly, as software developers, our main goal is to write code efficiently. We spend a lot of time reading, analyzing, and understanding code, and this can be a daunting task, especially when we are dealing with large codebases. The Entity Inspector extension aims to simplify this process by allowing developers to see all the entities in one place, making it easier to navigate through the codebase and find the information they need faster.
 
-Secondly, the Entity Inspektor extension provides a convenient way to manage entities. It enables developers to automatically generate an entity if they already have one in their code, saving them time and effort. Additionally, the plugin can hint about existing entities, making it easier to reuse code and avoid duplicating work.
+Secondly, the Entity Inspector extension provides a convenient way to manage entities. It enables developers to automatically generate an entity if they already have one in their code, saving them time and effort. Additionally, the plugin can hint about existing entities, making it easier to reuse code and avoid duplicating work.
 
-Finally, the Entity Inspektor extension promotes organization in code. It allows developers to see all the information about an entity in one place, making it easier to understand its purpose and function. This can lead to more maintainable code and better collaboration among team members.
+Finally, the Entity Inspector extension promotes organization in code. It allows developers to see all the information about an entity in one place, making it easier to understand its purpose and function. This can lead to more maintainable code and better collaboration among team members.
 
-In summary, the Entity Inspektor extension for VSCode provides an efficient, convenient, and organized way to manage entities in code, ultimately making the development process smoother and more productive.
+In summary, the Entity Inspector extension for VSCode provides an efficient, convenient, and organized way to manage entities in code, ultimately making the development process smoother and more productive.
 
 > TODO: Think about vscode configs and how to use them in extension.
 
