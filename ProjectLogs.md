@@ -247,9 +247,48 @@ Some example of modeling data: [LinkML - Linked data Modeling Language (model yo
 	- Synhronization of entities (from project or from scheme and define there is a genetaion of code)
 6. Help with CI/CD github actions (for example: check if there is a new version of scheme and if yes, then generate code)
 
-> TODOs for this weeks:
+> TODOs for this time:
 > - TODO: Start writing Bachelor Thesis (related work):
 > 	- Are there any similar extensions? If yes, what are they doing? What are their advantages and disadvantages? Comparing with some code helpers (copilot, lince, etc.), with ChatGPT. Compare with other tools for creating models (LinkML, etc.).
 
+---
 
-# 24.05.2023 |
+During this time I was thinking about how to create a model of EI and I found a tool called [LinkML](https://linkml.io/). It is a tool for creating models of data. I think that I will use it for work with a model of EI. <br>
+I wrote an introduction to my bachelor thesis and I started writing a related work. And also I was thinking about use cases of EI and content of my bachelor thesis.
+
+
+# 07.06.2023 | Related work
+
+## Approximate sylabus of the Bc. work
+
+~50 pages
+
+- Related work 
+	- Are there any similar extensions? 
+	- If yes, what are they doing? 
+	- What are their advantages and disadvantages? 
+	- Comparing with some code helpers (copilot, lince, etc.), with ChatGPT. Compare with other tools for creating models (LinkML, etc.).
+- Analyza 
+	- What is the problem? What is the goal? 
+	- What is the solution? What is the benefit?
+- Design 
+	- How to solve the problem? 
+	- What is the architecture, design, model?
+- implementace 
+	- How to implement the solution? What is the implementation? What is the model? (programmers doc)
+- User doc 
+	- How to use the extension? 
+	- How to install? 
+	- How to configure? 
+	- How to extend?
+- ? Administators doc
+	- How to install? 
+	- How to configure?
+- Evaluation 
+	- Show the results of the extension. Use cases. Peoples reactions (interviews, etc.)
+- Conclusion 
+	- What is the result? What is the benefit? What is the future work?
+
+## TODOs for this time:
+- TODO: Start writing related work in bachelor thesis
+- TODO: Start implementing EI extension
