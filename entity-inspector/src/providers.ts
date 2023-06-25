@@ -15,9 +15,10 @@ export class MarkerProvider implements vscode.CompletionItemProvider {
 
 		// Add basic completion items for all languages
 		completionItems.push(
-			new vscode.CompletionItem('class'),
-			new vscode.CompletionItem('attribute'),
-			new vscode.CompletionItem('method'),
+			new vscode.CompletionItem('class:'),
+			new vscode.CompletionItem('propetry:'),
+			new vscode.CompletionItem('method:'),
+            new vscode.CompletionItem('description:'),
 		);
 		
 		return completionItems;

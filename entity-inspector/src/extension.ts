@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import * as parser from './parser';
+import {Parser} from './extraction/parser';
 import * as Providers from './providers';
-import { EIClass } from './helpers';
+import { EIClass } from './helpers/classes';
 
 class MyDiagnostic{
 	static diagnosticCollection = vscode.languages.createDiagnosticCollection('myDiagnostics');
@@ -10,12 +10,16 @@ class MyDiagnostic{
 let cache = new Map<string, EIClass>();
 
 // This method is called when your extension is activated
-export function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "entity-inspector" is now active!');
+export async function activate(context: vscode.ExtensionContext) {
+	console.log('Yep, "entity-inspector" is now active!');
 	
-	memorizeEntityesFromWorkspace();
+	const parser = new Parser();
+	await parser.getExternalModel();
+	const entities = await parser.parseWorkspace();
+
 	addDiagnostic(MyDiagnostic.diagnosticCollection);
 
+	// Register providers
 	context.subscriptions.push(
 		vscode.languages.registerCompletionItemProvider(
 			{pattern: "**"}, // all files
@@ -26,33 +30,17 @@ export function activate(context: vscode.ExtensionContext) {
 			new Providers.SuggestionProvider()),
 	);
 
-	vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-		let entities = parser.getEntitiesFromFile(document.uri);
-		entities.forEach((entity) => {
-			cache.set(entity.name, entity);
-		});
-	});
+	// vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
+	// 	let entities = parser.getEntitiesFromFile(document.uri);
+	// 	entities.forEach((entity) => {
+	// 		cache.set(entity.name, entity);
+	// 	});
+	// });
 
-	vscode.workspace.onDidDeleteFiles((event: vscode.FileDeleteEvent) => {
-		memorizeEntityesFromWorkspace();
-	});
+	// vscode.workspace.onDidDeleteFiles((event: vscode.FileDeleteEvent) => {
 
-}
+	// });
 
-// memorize all entities from workspace
-function memorizeEntityesFromWorkspace() : void {
-	cache.clear();
-	vscode.workspace.findFiles('**/*.*', '').then((result) => {
-		let countEntities = 0;
-		result.forEach((file) => {
-			parser.getEntitiesFromFile(file).forEach((entity) => {
-				cache.set(entity.name, entity);
-				countEntities++;
-			});
-		});
-		console.log(`Found ${result.length} files with ${countEntities} entities`);
-		console.log(cache);
-	});
 }
 
 // Diagnostic of errors, warnings, infos and hints

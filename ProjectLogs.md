@@ -231,7 +231,7 @@ flowchart LR
 	Model <==> Scheme_in/out
 ```
 
-Some example of modeling data: [LinkML - Linked data Modeling Language (model your dana)](https://linkml.io/)
+Some example of modeling data: [LinkML - Linked data Modeling Language (model your data)](https://linkml.io/)
 
 **There are 2 ways how to create a model of EI:** <br>
 	1. Parse project and create small (?)files with only with entities. After that create a model of EI by comparing small files (and you can also create a scheme of Entities) <br>
@@ -292,3 +292,6 @@ I wrote an introduction to my bachelor thesis and I started writing a related wo
 ## TODOs for this time:
 - TODO: Start writing related work in bachelor thesis
 - TODO: Start implementing EI extension
+
+---
+
