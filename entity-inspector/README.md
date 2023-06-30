@@ -1,71 +1,39 @@
-# entity-inspector README
+# Entity-Inspector
 
-This is the README for your extension "entity-inspector". After writing up a brief description, we recommend including the following sections.
+It is the plugin for VS Code that provides the ability to analyze the structure of the code and extract information about objects and entities used in the project.
 
-## Features
+The plugin can scan the source code for the presence of classes, functions, variables, modules, packages and other entities, and then represent the objects found in the form of a hierarchical structure that allows you to quickly find the desired object.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Users can use Entity-Inspector to quickly find definitions and uses of objects, as well as to debug code. The plugin makes it easier to work with large projects, where a lot of objects can be confusing and difficult to track.
 
-For example if there is an image subfolder under your extension project workspace:
+## How to use
 
-\!\[feature X\]\(images/feature-x.png\)
+```bash
+$ git clone git@github.com:MarkSeliverstov/MFF-YearProject.git # clone the repository
+$ cd MFF-YearProject/entity-inspector # go to the extension folder
+$ npm install -g vsce # install vsce
+$ vsce package # create vsix package
+```
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+After that, you can install the extension in VS Code by opening the command palette `ctrl+shift+p` and typing `Extensions: Install from VSIX...` and selecting the generated vsix file. 
 
-## Requirements
+Then you can use it like a normal extension from the marketplace.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- In the `examples folder`, you can find examples of code that can be analyzed by the extension.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
+- The extension can **scan the source code** for the presence of classes, functions, and variables. 
+- Then EI-inspector **can export a model** of your workspace with the command: `export model` in the command palette `ctrl+shift+p`.
+- The extension can **hint to the user** about existing artifacts with IntelliSense `ctrl+space` when your cursor is in the `@ei-`
+    - like this:
+    ```
+    # @ei-class: Car | @ei-method: drive | @ei-property: speed
+    # @ei-description: This class represents a car object.
+    ```
+- The extension can also **show errors** if the project is entities with the same name, but different extensions.
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**

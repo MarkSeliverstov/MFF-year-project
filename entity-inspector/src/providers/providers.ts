@@ -8,10 +8,10 @@ export class MarkerProvider implements vscode.CompletionItemProvider {
         // Check if the line starts with the trigger suffix
 		const linePrefix = document.lineAt(position).text.substring(0, position.character);
 		if (!linePrefix.endsWith(triggerSuffix)) {
-			console.log("Unknown prefix: " + linePrefix);
+			// console.log("Unknown prefix: " + linePrefix);
 			return completionItems;
 		}
-		console.log("Known prefix: " + linePrefix);
+		// console.log("Known prefix: " + linePrefix);
 
 		// Add basic completion items for all languages
 		completionItems.push(

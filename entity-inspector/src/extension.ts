@@ -1,24 +1,31 @@
 import * as vscode from 'vscode';
 import {Parser} from './extraction/parser';
-import * as Providers from './providers';
-import { EIClass } from './helpers/classes';
+import * as Providers from './providers/providers';
+import { exportModel } from './helpers/export';
+import {Cache} from './helpers/cache';
 
 class MyDiagnostic{
 	static diagnosticCollection = vscode.languages.createDiagnosticCollection('myDiagnostics');
 }
-
-let cache = new Map<string, EIClass>();
 
 // This method is called when your extension is activated
 export async function activate(context: vscode.ExtensionContext) {
 	console.log('Yep, "entity-inspector" is now active!');
 	
 	const parser = new Parser();
-	await parser.getExternalModel();
-	const entities = await parser.parseWorkspace();
-
+	const cache = new Cache();
+	
+	cache.setCache(await parser.parseWorkspace());
 	addDiagnostic(MyDiagnostic.diagnosticCollection);
 
+	const command = "myExtension.exportModel";
+	const commandHandler = async () => {
+		console.log("Exporting model data");
+		console.log(cache.getCache());
+		await exportModel(cache.getCache());
+	};
+	context.subscriptions.push(vscode.commands.registerCommand(command, commandHandler));
+	
 	// Register providers
 	context.subscriptions.push(
 		vscode.languages.registerCompletionItemProvider(
@@ -30,17 +37,15 @@ export async function activate(context: vscode.ExtensionContext) {
 			new Providers.SuggestionProvider()),
 	);
 
-	// vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-	// 	let entities = parser.getEntitiesFromFile(document.uri);
-	// 	entities.forEach((entity) => {
-	// 		cache.set(entity.name, entity);
-	// 	});
-	// });
+	vscode.workspace.onDidSaveTextDocument(async (event: vscode.TextDocument) => {
+		parser.clearData();
+		cache.setCache(await parser.parseWorkspace());	
+	});
 
-	// vscode.workspace.onDidDeleteFiles((event: vscode.FileDeleteEvent) => {
-
-	// });
-
+	vscode.workspace.onDidDeleteFiles(async (event: vscode.FileDeleteEvent) => {
+		parser.clearData();
+		cache.setCache(await parser.parseWorkspace());
+	});
 }
 
 // Diagnostic of errors, warnings, infos and hints
@@ -63,7 +68,7 @@ function addDiagnostic(diagnosticCollection: vscode.DiagnosticCollection) {
     });
 }
 
-function addDiagnosticItems(kind: vscode.DiagnosticSeverity, message: string, mathItems: IterableIterator<RegExpMatchArray>, event: vscode.TextDocumentChangeEvent):
+function addDiagnosticItems(kind: vscode.DiagnosticSeverity, message: string, mathItems: IterableIterator<RegExpMatchArray>, event: vscode.TextDocumentChangeEvent): 
 	vscode.Diagnostic[] {
 
 	let items = [];
@@ -84,4 +89,6 @@ function addDiagnosticItems(kind: vscode.DiagnosticSeverity, message: string, ma
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	console.log('Oh no, "entity-inspector" is now deactivated!');
+}

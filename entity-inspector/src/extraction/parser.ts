@@ -1,136 +1,162 @@
 import * as vscode from 'vscode';
-import {EIClass, EIMethod, EIPropetry} from '../helpers/classes';
-import * as variables from '../helpers/variables';
+import {EIClass, EIMethod, EIPropetry} from '../helpers/types';
+import * as consts from '../helpers/consts';
 
 export class Parser{
-    private data: Map<string, EIClass> = new Map<string, EIClass>();
+    private dataFromWorkspace: EIClass[] = [];
     private currentFile: vscode.Uri | null = null;
-    private currentEntity: EIClass | null = null;
-    private previousLine: EIClass | EIMethod | EIPropetry | null = null;
+    private previousAddedElement: EIClass | EIMethod | EIPropetry | null = null;
 
-    public async parseWorkspace(): Promise<Map<string, EIClass>> {
-        try {
-            console.log("=== parseWorkspace ===");
-            
-            const files = await vscode.workspace.findFiles('*', 'eimodel.json');
-            console.log("Files found: " + files.length);
-
-            for (const file of files) {
-                await this.parseFile(file);
-            }
-
-            console.log("=== parsing done ===");
-        }
-        catch (error) {
-            console.log("Error:", error);
-        }
-
-        return this.data;
+    public clearData(): void {
+        this.dataFromWorkspace = [];
+        this.currentFile = null;
+        this.previousAddedElement = null;
     }
 
     public async getExternalModel(): Promise<void> {
-        try {
-            console.log("=== getExternalModel ===");
-            const files = await vscode.workspace.findFiles('eimodel.json');
-            
-            if (files.length === 0) {
-                console.log("Model not found");
-                return;
+        const files = await vscode.workspace.findFiles('eimodel.json');
+        
+        if (files.length === 0) {
+            console.log("External model not found");
+            return;
+        }
+        
+        const file = files[0];
+        console.log("External model found: " + file.fsPath);
+        const result = await vscode.workspace.fs.readFile(file);
+        const model = JSON.parse(result.toString());
+
+        for (const entity of model.classes) {
+            const eiclass = new EIClass(entity.name, entity.description);
+            const properties = new Array<EIPropetry>();
+            const methods = new Array<EIMethod>();
+
+            for (const property of entity.properties) {
+                properties.push(new EIPropetry(property.name, property.description));
             }
-            
-            console.log("Model found");
-            
-            for (const file of files) {
-                console.log("Model: " + file.fsPath);
-                const result = await vscode.workspace.fs.readFile(file);
-                const model = JSON.parse(result.toString());
-                console.log(model);
+            for (const method of entity.methods) {
+                methods.push(new EIMethod(method.name, method.description));
             }
-        } catch (error) {
-            console.log("Error:", error);
+
+            eiclass.properties = properties;
+            eiclass.methods = methods;
+
+            this.dataFromWorkspace.push(eiclass);
         }
     }
+
+    public async parseWorkspace(): Promise<EIClass[]> {
+        console.log("=== parseWorkspace ===");
+
+        await this.getExternalModel();
+        
+        const files = await vscode.workspace.findFiles('*', 'eimodel*.json');
+        console.log("Files found: " + files.length);
+
+        for (const file of files) {
+            await this.parseFile(file);
+        }
+
+        console.log("=== parsing done ===");
+        return this.dataFromWorkspace;
+    }
+
 
     private async parseFile(file: vscode.Uri): Promise<void> {
-        
-        try {
-            this.currentFile = file;
-            console.log("Parsing file: " + file.fsPath);
+        this.currentFile = file;
+        console.log("Parsing file: " + file.fsPath);
 
-            const fileText = await vscode.workspace.fs.readFile(file);
-            const lines = fileText.toString().split("\n");
+        const fileText = await vscode.workspace.fs.readFile(file);
+        const lines = fileText.toString().split("\n");
 
-            while (lines.length > 0) {
-                let line = lines.shift();
-                if (line === undefined) {
-                    break;
+        while (lines.length > 0) {
+            let line = lines.shift();
+            if (line === undefined) {
+                break;
+            }
+            
+            if (line.match(new RegExp(consts.CLASS_MARKER, 'gi'))) {
+                await this.getEntity(line);
+                continue;
+            }
+            if (line.match(new RegExp(consts.DESCRIPTION_MARKER, 'gi'))) {
+                if (this.previousAddedElement !== null) {
+                    this.addDescritpion(this.previousAddedElement, line);
                 }
-                
-                if (line.match(new RegExp(variables.classMarker, 'gi'))) {
-                    this.getClass(line);
-                    continue;
-                }
-                if (line.match(new RegExp(variables.descriptionMarker, 'gi'))) {
-                    this.getDescritpion(line);
-                    continue;
-                }
-                if (line.match(new RegExp(variables.propertyMarker, 'gi'))) {
-                    this.getProperty(line);
-                    continue;
-                }
-                if (line.match(new RegExp(variables.methodMarker, 'gi'))) {
-                    this.getMethod(line);
-                    continue;
-                }
+                continue;
+            }
+            if (line.match(new RegExp(consts.PROPETRY_MARER, 'gi'))) {
+                this.addProperty2Entity(line);
+                continue;
+            }
+            if (line.match(new RegExp(consts.METHOD_MARKER, 'gi'))) {
+                this.addMethod2Entity(line);
+                continue;
             }
         }
-        catch (error) {
-            console.log("Error:", error);
-        }
     }
 
-    private getClass(line: string): void {
-        if (this.currentEntity !== null) {
-            this.data.set(this.currentEntity.name, this.currentEntity);
-            console.log(this.currentEntity);
+    private async getEntity(line: string): Promise<void> {
+        const regex = new RegExp(consts.CLASS_MARKER + "\\s*(\\w+)");
+        const regName = line.match(regex);
+        const name = regName !== null ? regName[1] : null;
+        
+        if (name !== null) {
+            for (const entity of this.dataFromWorkspace) {
+                if (entity.name === name) {
+                    const ERRORTEXT = 
+                    "Entity <" + name + "> in: " + this.currentFile!.fsPath + " already exists" + "\n" +
+                    "        - You can't have two entities with the same name, plese change one of them.";
+
+                    console.log("[ERROR] " + ERRORTEXT);
+                    await vscode.window.showErrorMessage(ERRORTEXT, "Ok");
+                    return;
+                }
+            }
+
+            console.log("   Entity found: " + name);
+            this.dataFromWorkspace.push(new EIClass(name));
+            this.previousAddedElement = this.dataFromWorkspace[this.dataFromWorkspace.length - 1];
+        }
+    }
+    
+    private addProperty2Entity(line: string): void {
+        const regex = new RegExp(consts.PROPETRY_MARER + "\\s*(\\w+)");
+        const popertyRegex = line.match(regex);
+        const propertyString = popertyRegex !== null ? popertyRegex[1] : null;
+
+        if (propertyString !== null) {
+            const eiProperty = new EIPropetry(propertyString);
+            const index = this.dataFromWorkspace.length - 1;
+            this.dataFromWorkspace[index].properties.push(eiProperty);
+            this.previousAddedElement = eiProperty;
         }
 
-        const regexx = /@ei-class:\s+(\w+)/;
-        const name = line.match(regexx);
-        if (name !== null && name !== undefined) {
-            this.currentEntity = new EIClass(name[1], this.currentFile!);
-        }        
+        console.log("       Property found: " + propertyString);
+    }
+    
+    private addMethod2Entity(line: string): void {
 
-        this.previousLine = this.currentEntity;
+        const regex = new RegExp(consts.METHOD_MARKER + "\\s*(\\w+)");
+        const methodRegex = line.match(regex);
+        const methodString = methodRegex !== null ? methodRegex[1] : null;
+
+        if (methodString !== null) {
+            const eiMethod = new EIMethod(methodString);
+            const index = this.dataFromWorkspace.length - 1;
+            this.dataFromWorkspace[index].methods.push(eiMethod);
+            this.previousAddedElement = eiMethod;
+        }
+
+        console.log("       Method found: " + methodString);
     }
 
-    private getDescritpion(line: string): void {
-        const regexx = /@ei-description:\s+(.*)/;
-        const description = line.match(regexx);
-        if (description !== null && description !== undefined) {
-            this.previousLine!.description = description[1];   
+    private addDescritpion(prevElement: EIClass | EIMethod | EIPropetry, line: string): void {
+
+        const regex = new RegExp(consts.DESCRIPTION_MARKER + "\\s*(.*)");
+        const description = line.match(regex);
+        if (description !== null){
+            prevElement.description = description[1];
         }
-    }
-
-    private getProperty(line: string): void {
-        const regex = /@ei-property:\s+(\w+)\s*(\{type:\s*(\w+),\s*default:\s*(\w+)\})?/;
-        const propertyString = line.match(regex);
-        if (propertyString !== null && propertyString !== undefined) {
-            const property = new EIPropetry(propertyString[1], propertyString[3], propertyString[4]);
-            this.currentEntity!.properties.push(property);
-        }
-
-        this.previousLine = this.currentEntity;
-    }
-
-    private getMethod(line: string): void {
-        const regex = /@ei-method:\s+(\w+)\s*(\{type:\s*(\w+)\})?/;
-        const methodString = line.match(regex);
-        if (methodString !== null && methodString !== undefined) {
-            const method = new EIMethod(methodString[1], methodString[3]);
-            this.currentEntity!.methods.push(method);
-        }
-
-        this.previousLine = this.currentEntity;
     }
 }
