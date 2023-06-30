@@ -293,5 +293,105 @@ I wrote an introduction to my bachelor thesis and I started writing a related wo
 - TODO: Start writing related work in bachelor thesis
 - TODO: Start implementing EI extension
 
+## Related work
+
+### Keywords
+
+- vscode extension
+- code helper
+- code generator
+- project analyzer
+- code analyzer
+- model of project
+- project model
+
+### Searchings
+
+- 15.06.2023 | Local Code Generator Tool | google search
+- first 20 results
+- filtration criteria: 
+	- it is a vscode extension
+	- it is a code helper/code generator/code analyzer
+	- it is a project analyzer
+	- there is a code suggestion
+- found:
+	- oasis
+	- coding assistance
+		- github copilot	
+		- tabnine
+	- intellisense
+
+
+#### [oasis](https://github.com/ChuloAI/oasis) - a Local Code Generator Tool Using Open Source Models and Microsoft’s Guidance Library
+
+[Post about it](https://betterprogramming.pub/building-oasis-a-local-code-generator-tool-using-open-source-models-and-microsofts-guidance-aef54c3e2840)
+
+How it works:
+- extension uses a local model to generate code with promts
+
 ---
 
+#### [copilot](https://copilot.github.com/) - AI pair programmer
+
+How it works:
+- You can write a comment and copilot will write a code for you
+- Copilot can suggest a code for you
+- Copilot is trained on billions of lines of public code
+- You can ask copilot right in chat in the sidebar
+
+#### [TabNine](https://www.tabnine.com/) - AI code completion like copilot
+
+#### [intellisense](https://code.visualstudio.com/docs/editor/intellisense)
+
+- IntelliSense is a general term for various code editing features including: code completion, parameter info, quick info, and member lists. IntelliSense features are sometimes called by other names such as "code completion", "content assist", and "code hinting."
+
+---
+
+- 25.06.2023 | project model | vscode marketplace
+- first 30 results
+- filtration criteria: 
+	- it is a vscode extension
+	- it is a code helper/code generator/code analyzer
+	- it is a project analyzer
+	- there is a code suggestion
+- found:
+	- contextive
+
+#### [contextive](https://github.com/dev-cycles/contextive) - context visualization for vscode
+
+<img src="assets/contextive-search.png" alt="contextive" height="200" />
+<img src="assets/contextive-demo.png" alt="contextive-demo" height="200" />
+<img src="assets/contextive-definition.png" alt="contextive-def" height="200" />
+
+It is a tool for context definition in the project.
+
+How it works:
+- You can define a context ("vision", "usage examples", "description") in the project in special directory (.contextive) to yaml file (definition.yaml)
+- After that you can use this context in the project and you can see info about it with suggestions in the code and IntelliSense.
+
+
+### Other tools
+
+#### [LinkML](https://linkml.io/) - Linked data Modeling Language (model your data)
+DATE: 15.06.2023
+
+How it works:
+- You can create a model of data in yaml file
+- You can generate code from this model
+- You can validate your data with this model
+- You can create a scheme from this model
+
+# 29.06.2023
+
+- Questions
+	- how many search results should I check?
+	- To say exactly how the user will use it
+	- If the project is large enough, it will be quite difficult and long to parse the project (however, you can not parse the entire project every time, but there are many conditions for this and a lot of bugs:
+		*how it store*,
+		*how it is structured*,
+		*parsing only on save | on change | on command*,
+		*collision* - if extension parse one file,but user already changed another file or smth like that,
+	- Using json or yaml model?
+		- json: it is more difficult to write, but it is easier to parse
+		- yaml: it is easier to write, but it is more difficult to parse
+	- I like a contextive extension, but it is not a code generator, it is a code helper. Entities are not defined in different files, but are defined separately in yaml files and then you can view the context of the project according to the words in Intellisenses.
