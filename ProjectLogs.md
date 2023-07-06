@@ -295,19 +295,21 @@ I wrote an introduction to my bachelor thesis and I started writing a related wo
 
 ## Related work
 
-### Keywords
+## Keywords and phrases:
+- Visual Studio Code extensions
+- Software development productivity tools
+- Development workflow management
+- Software project management
+- Local Code Generator Tool
+- Static code analysis
+- Project analyzer
+- Model of project
+- Code analysis
+- Code helpe
 
-- vscode extension
-- code helper
-- code generator
-- project analyzer
-- code analyzer
-- model of project
-- project model
+### Queries
 
-### Searchings
-
-- 15.06.2023 | Local Code Generator Tool | google search
+**15.06.2023 | Local Code Generator Tool | google search**
 - first 20 results
 - filtration criteria: 
 	- it is a vscode extension
@@ -315,39 +317,12 @@ I wrote an introduction to my bachelor thesis and I started writing a related wo
 	- it is a project analyzer
 	- there is a code suggestion
 - found:
-	- oasis
-	- coding assistance
-		- github copilot	
-		- tabnine
-	- intellisense
+	- [Oasis](https://github.com/ChuloAI/oasis)
+	- [GitHub Copilot · Your AI pair programmer](https://github.com/features/copilot)	
+	- [AI assistant for software developers | Tabnine](https://www.tabnine.com/)
+	- [IntelliSense in Visual Studio Code](https://code.visualstudio.com/docs/editor/intellisense)
 
-
-#### [oasis](https://github.com/ChuloAI/oasis) - a Local Code Generator Tool Using Open Source Models and Microsoft’s Guidance Library
-
-[Post about it](https://betterprogramming.pub/building-oasis-a-local-code-generator-tool-using-open-source-models-and-microsofts-guidance-aef54c3e2840)
-
-How it works:
-- extension uses a local model to generate code with promts
-
----
-
-#### [copilot](https://copilot.github.com/) - AI pair programmer
-
-How it works:
-- You can write a comment and copilot will write a code for you
-- Copilot can suggest a code for you
-- Copilot is trained on billions of lines of public code
-- You can ask copilot right in chat in the sidebar
-
-#### [TabNine](https://www.tabnine.com/) - AI code completion like copilot
-
-#### [intellisense](https://code.visualstudio.com/docs/editor/intellisense)
-
-- IntelliSense is a general term for various code editing features including: code completion, parameter info, quick info, and member lists. IntelliSense features are sometimes called by other names such as "code completion", "content assist", and "code hinting."
-
----
-
-- 25.06.2023 | project model | vscode marketplace
+**25.06.2023 | project model | vscode marketplace**
 - first 30 results
 - filtration criteria: 
 	- it is a vscode extension
@@ -355,25 +330,142 @@ How it works:
 	- it is a project analyzer
 	- there is a code suggestion
 - found:
-	- contextive
+	- [Contextive](https://marketplace.visualstudio.com/items?itemName=devcycles.contextive)
 
-#### [contextive](https://github.com/dev-cycles/contextive) - context visualization for vscode
+
+**25.06.2023 | development workflow management vscode extension | google search**
+- First 20 results
+- filtration criteria: 
+	- it is a vscode extension
+	- it is a project analyzer
+- found:
+	- [Visual Assist](https://marketplace.visualstudio.com/items?itemName=WholeTomatoSoftware.VisualAssist)
+	- [IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+
+**25.06.2023 | static code analysis vscode | google search**
+- First 20 results
+- filtration criteria: 
+	- it is a vscode extension
+	- it is a code helper/code generator/code analyzer
+	- it is a project analyzer
+- found:
+	- [Codiga - Static Code Analysis for VisualStudio](https://www.codiga.io/static-code-analysis/vscode/)
+
+**25.06.2023 | Entity inspector | google search**
+- First 20 results
+- filtration criteria: 
+	- it is a project analyzer
+- found:
+
+## About findings
+
+### evaluation criteria:
+- It is a vscode extension
+- It is a code helper/generator/analyzer
+- It is a project analyzer
+- There is a code suggestion
+- Available for free
+- It is open source
+- It is a local tool
+
+### Marking:
+
+(X - not, √ - yes, - partialy yes, ? - not sure)
+
+### 1. [oasis](https://github.com/ChuloAI/oasis)
+[Post about it](https://betterprogramming.pub/building-oasis-a-local-code-generator-tool-using-open-source-models-and-microsofts-guidance-aef54c3e2840)
+
+A Local Code Generator Tool Using Open Source Models and Microsoft’s Guidance Library.
+The plugin uses a local model to generate code with promts
+
+The idea is generate code with the assistance of guidance library, using open source LLM models that run locally. This library is exposed as a VSCode plugin, and adds code-generation commands on editor selection (invoked through right-click or command palette).
+
+It is free and open source. This is under development
+
+How it works:
+- You can select a code and generate a code with the assistance of guidance library
+- You can add self-written commands for generating code
+- Actually, it is a code generator that uses a local model for generating code
+
+### 2. [copilot](https://copilot.github.com/) - AI pair programmer
+
+It is a tool for generating code with the assistance of AI. GitHub Copilot uses the OpenAI Codex to suggest code and entire functions in real-time, right from your editor. OpenAI Codex is a descendant of GPT-3 and has been trained on a selection of public source code repositories. GitHub Copilot works with a broad set of frameworks and languages, including Python, JavaScript, TypeScript, Ruby, and Go, and is trained on billions of lines of public code.
+
+It is paid and closed source.
+
+How it works:
+- You can write a comment and copilot will write a code for you
+- Copilot can suggest a code for you
+- Copilot is trained on billions of lines of public code
+- You can ask copilot right in chat in the sidebar
+
+### 3. [TabNine](https://www.tabnine.com/) - AI code completion like copilot
+
+It is a tool for generating code with the assistance of AI like copilot. TabNine is an autocompleter that helps you write code faster. They are using machine learning to train TabNine on millions of files from open-source projects. TabNine is trained on 2 million files from GitHub and is adding more each day.
+
+It is paid and closed source.
+
+### 4. [intellisense](https://code.visualstudio.com/docs/editor/intellisense)
+
+IntelliSense is a general term for various code editing features including: code completion, parameter info, quick info, and member lists. IntelliSense features are sometimes called by other names such as "code completion", "content assist", and "code hinting."
+
+It is free tool in vscode.
+
+How it works:
+- You can see suggestions in the code
+- You can see info about the code
+
+### 5. [contextive](https://github.com/dev-cycles/contextive) - context visualization for vscode
 
 <img src="assets/contextive-search.png" alt="contextive" height="200" />
 <img src="assets/contextive-demo.png" alt="contextive-demo" height="200" />
 <img src="assets/contextive-definition.png" alt="contextive-def" height="200" />
 
 It is a tool for context definition in the project.
+Contextive is inspired by the concept of the Ubiquitous Language from the practice of Domain Driven Design (DDD) and is intended to support ubiquitous language management practices on DDD projects.
+
+By defining terms in a central definitions file, Contextive can surface definitions and usage examples in auto-complete suggestions & hover panels wherever the terms are used - in code (of any language across the stack), comments, config, and documentation (e.g. markdown, yaml, etc).
+
+It is free and open source. This is under development
 
 How it works:
 - You can define a context ("vision", "usage examples", "description") in the project in special directory (.contextive) to yaml file (definition.yaml)
 - After that you can use this context in the project and you can see info about it with suggestions in the code and IntelliSense.
 
+### 6. [Visual Assist](https://marketplace.visualstudio.com/items?itemName=WholeTomatoSoftware.VisualAssist)
+
+It is a tool for generating code with the assistance of AI like copilot. Visual Assist is a Visual Studio extension - a productivity tool for refactoring, reading, writing, navigating and generating C / C++ / C# code.
+
+It is paid and closed source.
+
+How it works:
+- It allows you to generate code 
+- It allows you to navigate in the code
+- It allows you to refactor the code
+
+### 7. [IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+
+This extension provides AI-assisted IntelliSense by showing recommended completion items for your code context at the top of the completions list. When it comes to overloads, rather than taking the time to cycle through the alphabetical list of member, IntelliCode presents the most relevant one first. 
+
+It is free and open source.
+
+
+### 8. [Codiga](https://www.codiga.io/static-code-analysis/vscode/) - Static Code Analysis for VisualStudio
+
+It is a tool for static code analysis. Codiga is a static code analysis tool that helps developers write better code. It is a Visual Studio Code extension that provides real-time feedback on code quality, security, and performance issues.
+
+It is paid and closed source.
+
+! But is not available now
 
 ### Other tools
 
 #### [LinkML](https://linkml.io/) - Linked data Modeling Language (model your data)
 DATE: 15.06.2023
+
+It is a tool for modeling data. LinkML is a modeling language for describing data models. It is a YAML-based language that is easy to read and write, and is designed to be easy to learn and use. 
+
+It is free and open source.
 
 How it works:
 - You can create a model of data in yaml file
