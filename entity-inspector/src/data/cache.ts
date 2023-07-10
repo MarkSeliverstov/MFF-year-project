@@ -1,4 +1,4 @@
-import { EIClass } from './types';
+import { EIClass } from '../helpers/types';
 
 export class Cache{
     private data: EIClass[] = [];

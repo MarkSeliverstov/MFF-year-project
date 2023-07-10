@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import {Parser} from './extraction/parser';
-import * as Providers from './providers/providers';
-import { exportModel } from './helpers/export';
-import {Cache} from './helpers/cache';
+import {Parser} from './features/modeling/extraction/parser';
+import * as Providers from './features/hints/providers/providers';
+import { exportModel } from './features/modeling/export';
+import {Cache} from './data/cache';
 
 class MyDiagnostic{
 	static diagnosticCollection = vscode.languages.createDiagnosticCollection('myDiagnostics');

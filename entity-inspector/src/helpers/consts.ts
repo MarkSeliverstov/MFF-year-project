@@ -1,7 +1,7 @@
-let CLASS_MARKER = "@ei-class:";
-let PROPETRY_MARER = "@ei-property:";
-let METHOD_MARKER = "@ei-method:";
-let DESCRIPTION_MARKER = "@ei-description:";
+const CLASS_MARKER = "@ei-class:";
+const PROPETRY_MARER = "@ei-property:";
+const METHOD_MARKER = "@ei-method:";
+const DESCRIPTION_MARKER = "@ei-description:";
 
 export {
     CLASS_MARKER,

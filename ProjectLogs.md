@@ -492,6 +492,6 @@ Next tasks:
 
 - [ ] Edit text
 - [ ] Add use case for comparsion
-- [ ] Section 1.1-3 to one section
+- [x] Section 1.1-3 to one section
 - [ ] Wildcards in comparsion
-- [ ] Feature based architecture (FBA)
+- [ ] Feature based architecture [FBA](https://maestros.io/structure-by-type-vs-feature)

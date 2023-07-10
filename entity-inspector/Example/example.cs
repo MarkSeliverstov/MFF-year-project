@@ -1,4 +1,4 @@
-// @ei-class:
+// @ei-class: Person
 class Person:
 
     // @ei-property: name
