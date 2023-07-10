@@ -1,5 +1,5 @@
 #
-# How you should write the class with properties but it's already exist
+# How you should write the class with properties
 #
 
 # @ei-class: CarExample
