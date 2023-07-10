@@ -476,7 +476,7 @@ How it works:
 # 29.06.2023
 
 - Questions
-	- how many search results should I check?
+	- how many searches results should I check?
 	- To say exactly how the user will use it
 	- If the project is large enough, it will be quite difficult and long to parse the project (however, you can not parse the entire project every time, but there are many conditions for this and a lot of bugs:
 		*how it store*,
@@ -487,3 +487,11 @@ How it works:
 		- json: it is more difficult to write, but it is easier to parse
 		- yaml: it is easier to write, but it is more difficult to parse
 	- I like a contextive extension, but it is not a code generator, it is a code helper. Entities are not defined in different files, but are defined separately in yaml files and then you can view the context of the project according to the words in Intellisenses.
+
+Next tasks:
+
+- [ ] Edit text
+- [ ] Add use case for comparsion
+- [ ] Section 1.1-3 to one section
+- [ ] Wildcards in comparsion
+- [ ] Feature based architecture (FBA)
