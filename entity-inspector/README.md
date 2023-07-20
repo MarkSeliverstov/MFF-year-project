@@ -23,7 +23,9 @@ Then you can use it like a normal extension from the marketplace.
 
 ### Video
 
-https://github.com/MarkSeliverstov/MFF-YearProject/assets/96746739/aa374789-9152-45fe-bce3-84c67e5e1957
+
+https://github.com/MarkSeliverstov/MFF-YearProject/assets/96746739/e7f02bf9-b11b-4446-a077-191516437d49
+
 
 ## Release Notes
 
