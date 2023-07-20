@@ -22,7 +22,8 @@ Then you can use it like a normal extension from the marketplace.
 - In the `examples folder`, you can find examples of code that can be analyzed by the extension.
 
 ### Video
-<video width="630" height="300" src="../assets/how_to_install.mp4"></video>
+
+https://github.com/MarkSeliverstov/MFF-YearProject/assets/96746739/aa374789-9152-45fe-bce3-84c67e5e1957
 
 ## Release Notes
 
