@@ -6,7 +6,7 @@ The plugin can scan the source code for the presence of classes, functions, vari
 
 Users can use Entity-Inspector to quickly find definitions and uses of objects, as well as to debug code. The plugin makes it easier to work with large projects, where a lot of objects can be confusing and difficult to track.
 
-## How to use
+## How to install
 
 ```bash
 $ git clone git@github.com:MarkSeliverstov/MFF-YearProject.git # clone the repository
@@ -20,6 +20,9 @@ After that, you can install the extension in VS Code by opening the command pale
 Then you can use it like a normal extension from the marketplace.
 
 - In the `examples folder`, you can find examples of code that can be analyzed by the extension.
+
+### Video
+<video width="630" height="300" src="../assets/how_to_install.mp4"></video>
 
 ## Release Notes
 
