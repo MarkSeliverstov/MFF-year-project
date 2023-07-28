@@ -9,10 +9,11 @@ Users can use Entity-Inspector to quickly find definitions and uses of objects, 
 ## How to install
 
 ```bash
-$ git clone git@github.com:MarkSeliverstov/MFF-YearProject.git # clone the repository
-$ cd MFF-YearProject/entity-inspector # go to the extension folder
-$ npm install -g vsce # install vsce
-$ vsce package # create vsix package
+$ git clone git@github.com:MarkSeliverstov/MFF-YearProject.git    # clone the repository
+$ cd MFF-YearProject/entity-inspector                             # go to the extension folder
+$ npm i                                                           # install npm packages
+$ npm install -g vsce                                             # install vsce
+$ vsce package                                                    # create vsix package
 ```
 
 After that, you can install the extension in VS Code by opening the command palette `ctrl+shift+p` and typing `Extensions: Install from VSIX...` and selecting the generated vsix file. 
