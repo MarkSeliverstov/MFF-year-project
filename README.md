@@ -10,3 +10,4 @@
 ---
 
 ## Entity Inspector - VSCode Extension
+
