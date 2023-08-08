@@ -14,6 +14,19 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": [
+	  {
+	    "id": "general",
+		"title": "General Settings",
+		"properties": {
+		  "EI.prefix": {
+			"type": "string",
+			"description": "Change prefix like @<prefix>-Class",
+			"default": "ei"
+		  }
+		}
+	  }
+	],
     "commands": [
       {
         "command": "myExtension.exportModel",
