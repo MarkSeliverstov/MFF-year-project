@@ -495,3 +495,105 @@ Next tasks:
 - [x] Section 1.1-3 to one section
 - [ ] Wildcards in comparsion
 - [ ] Feature based architecture [FBA](https://maestros.io/structure-by-type-vs-feature)
+
+model - EIclass a separate
+settings - samostatne
+storage - zamisto cashe - interface
+
+extension server pipeline, 
+
+## Use cases: a architektura
+Kde neco zmenilo
+Datove modelovani - semanticky model - antology engeneer
+App pro dost velky project
+komu a chci pomoc: programator: propojeni docs with code a tak; specefikace - uppozorneni na zmeneni specefikace; analitika - z databazi;
+
+What developer need:
+1. Code: 
+	- generate code x
+	- refactor code x - externi balicek
+	- navigate in the code x-
+	- find code x-
+	- validate code x
+	- format code
+	- debug code
+	- test code
+	- compile code
+	- run code
+	- deploy code
+	- build code
+	- lint code
+	- analyze code x
+	- check code x
+	- review code
+	- document code
+2. Testing:
+	- generate tests
+	- automate tests
+3. Deployment:
+	- deploy code
+	- build code
+	- run code
+	- compile code
+4. Changes:
+	- track changes x
+	- version control
+
+
+**Analýza a porovnání modelů:**
+systém, který dokáže stáhnout model z JSON souboru a porovnat jej s aktuální strukturou projektu. Při zjištění nesrovnalostí může systém generovat zprávu o rozdílech. 
+To pomůže vývojářům rychle identifikovat a řešit problémy v architektuře.
+
+**Rady stávajících tříd:**
+mechanismus, který analyzuje kód projektu a nabízí vývojářům možné třídy pro použití v jejich projektu. 
+To může být založeno na pojmenování tříd, jejich struktuře a použitých vzorcích.
+
+**Vizualizace architektury:**
+vizualizace architektury projektu. 
+Grafické znázornění tříd, vazeb mezi nimi a závislostí může učinit architekturu srozumitelnější a lépe analyzovatelnou.
+
+**Generování tříd:**
+Přidejte funkce pro generování nových tříd na základě daných parametrů. 
+To může zahrnovat automatické vytváření souborů s kódem, dokumentací a základními metodami.
+
+**Jazyková podpora:**
+To zahrnuje definování anotací v komentářích, kterým bude systém rozumět bez ohledu na jazyk.
+
+**Automatické aktualizace modelu:**
+mechanismus, který automaticky aktualizuje model projektu na základě změn kódu. 
+To pomůže udržet data aktuální a poskytnout přesnější vodítka.
+
+**Interaktivita a dopoœručení:**
+pomoc vývojářům vytvářet nové třídy a metody poskytováním doporučení pro podpisy a implementaci na základě dostupné architektury.
+
+parsovani - command a nejaky alert
+
+base class for providers (default, remote, atd)
+externi server pro treba napovidani
+
+index.ts pro soubory
+
++ lecense
++ kdo pouziva usecasy
++ id zamisto name
++ funkcni - uzivatel muze exportovat model (nevim jak)
++ nefunkcni - definovat prostredi KDE to funguje
+
+## funkcni pozadovky
+	- porovnovani externiho a exportniho modelu (local). Chci exportovat model
+	- extrakce anotaci
+	- napovida anotaci: snipets anotaci, hinty (@ei-....)
+
+
+
+1. refactoring kodu - 
+2. sjednoceni modelu (anotaci a entity)
+3. pouzivani v svem kod
+4. Rewrite PL - format it
+5. mam zadefinovat architekturu (mock server, vscode extension, cli interface)
+6. Zkusim zadefinovat 1 usecase (?)
+
+16 - poslat update
+
+languages for parser - https://code.visualstudio.com/docs/languages/identifiers
+helpfull comments parser example - https://github.com/aaron-bond/better-comments
