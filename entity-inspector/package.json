@@ -15,22 +15,61 @@
   "main": "./out/extension.js",
   "contributes": {
     "configuration": [
-	  {
-	    "id": "general",
-		"title": "General Settings",
-		"properties": {
-		  "EI.prefix": {
-			"type": "string",
-			"description": "Change prefix like @<prefix>-Class",
-			"default": "ei"
-		  }
-		}
-	  }
-	],
+      {
+        "id": "general",
+        "title": "Markers after",
+        "properties": {
+          "entity-inspector.prefixName": {
+            "order": 0,
+            "type": "string",
+            "default": "lc-"
+          },
+          "entity-inspector.identifierMarker": {
+            "order": 1,
+            "type": "string",
+            "default": "identifier"
+          },
+          "entity-inspector.nameMarker": {
+            "order": 2,
+            "type": "string",
+            "default": "name"
+          },
+          "entity-inspector.typeMarker": {
+            "order": 3,
+            "type": "string",
+            "default": "type"
+          },
+          "entity-inspector.entityMarker": {
+            "order": 4,
+            "type": "string",
+            "default": "entity"
+          },
+          "entity-inspector.propertyMarker": {
+            "order": 5,
+            "type": "string",
+            "default": "property"
+          },
+          "entity-inspector.methodMarker": {
+            "order": 6,
+            "type": "string",
+            "default": "method"
+          },
+          "entity-inspector.descriptionMarker": {
+            "order": 7,
+            "type": "string",
+            "default": "description"
+          }
+        }
+      }
+    ],
     "commands": [
       {
-        "command": "myExtension.exportModel",
-        "title": "Export Model"
+        "command": "entity-inspector.exportModel",
+        "title": "EI: Export Model"
+      },
+      {
+        "command": "entity-inspector.runParser",
+        "title": "EI: Run parser"
       }
     ]
   },
@@ -43,16 +82,17 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.77.0",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "eslint": "^8.36.0",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.47.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "typescript": "^4.9.5",
-    "@vscode/test-electron": "^2.3.0"
+    "vsce": "^2.15.0"
   }
 }

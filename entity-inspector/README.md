@@ -11,8 +11,7 @@ Users can use Entity-Inspector to quickly find definitions and uses of objects, 
 ```bash
 $ git clone git@github.com:MarkSeliverstov/MFF-YearProject.git    # clone the repository
 $ cd MFF-YearProject/entity-inspector                             # go to the extension folder
-$ npm i                                                           # install npm packages
-$ npm install -g vsce                                             # install vsce
+$ npm install                                                     # install npm packages
 $ vsce package                                                    # create vsix package
 ```
 
@@ -27,6 +26,7 @@ Then you can use it like a normal extension from the marketplace.
 
 https://github.com/MarkSeliverstov/MFF-YearProject/assets/96746739/e7f02bf9-b11b-4446-a077-191516437d49
 
+**Enjoy!**
 
 ## Release Notes
 
@@ -42,5 +42,8 @@ https://github.com/MarkSeliverstov/MFF-YearProject/assets/96746739/e7f02bf9-b11b
     ```
 - The extension can also **show errors** if the project is entities with the same name, but different extensions.
 
+### 0.0.2
 
-**Enjoy!**
+- Parsing by command
+- Add annotation and instance model
+- Added chnging prefixes in settingss

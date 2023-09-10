@@ -1,94 +1,98 @@
 import * as vscode from 'vscode';
-import {Parser} from './features/modeling/extraction/parser';
-import * as Providers from './features/hints/providers/providers';
-import { exportModel } from './features/modeling/export';
-import {Cache} from './data/cache';
+import {AnnotationParser} from './parser';
+import * as Providers from './hints/providers';
+// import { exportModel } from './modeling/export';
+import { AnotationModel, InstanceModel } from './model';
+import { AnnotationMarkersConfiguration, AnnotationReaderConfiguration, CommandsConfiguration } from './configuration';
+import { ProgressLocation } from 'vscode';
+import { convertAnotationsToInstances as convertAnnotationsToInstances } from './converter';
+import { exportModel } from './exporter';
 
-class MyDiagnostic{
-	static diagnosticCollection = vscode.languages.createDiagnosticCollection('myDiagnostics');
-}
+let anotationModel: AnotationModel;
+let instanceModel: InstanceModel;
 
 // This method is called when your extension is activated
 export async function activate(context: vscode.ExtensionContext) {
 	console.log('Yep, "entity-inspector" is now active!');
+	const parserConfig = new AnnotationReaderConfiguration();
+	const anotationConfig = new AnnotationMarkersConfiguration();
+
+	const parser = new AnnotationParser(parserConfig, anotationConfig);
+
+
+
+
+
+	// const anotations: AnotationModel = parser.parseWorkspace();
+
+	//const storage = new Storage();
 	
-	const parser = new Parser();
-	const cache = new Cache();
-	
-	cache.setCache(await parser.parseWorkspace());
-	addDiagnostic(MyDiagnostic.diagnosticCollection);
+	//_registerCommands(context, parser, storage);
+	//_registerProviders(context);
 
-	const command = "myExtension.exportModel";
-	const commandHandler = async () => {
-		console.log("Exporting model data");
-		console.log(cache.getCache());
-		await exportModel(cache.getCache());
-	};
-	context.subscriptions.push(vscode.commands.registerCommand(command, commandHandler));
-	
-	// Register providers
-	context.subscriptions.push(
-		vscode.languages.registerCompletionItemProvider(
-			{pattern: "**"}, // all files
-			new Providers.MarkerProvider()),
-			
-		vscode.languages.registerInlineCompletionItemProvider(
-			{pattern: "**"},
-			new Providers.SuggestionProvider()),
-	);
 
-	vscode.workspace.onDidSaveTextDocument(async (event: vscode.TextDocument) => {
-		parser.clearData();
-		cache.setCache(await parser.parseWorkspace());	
-	});
 
-	vscode.workspace.onDidDeleteFiles(async (event: vscode.FileDeleteEvent) => {
-		parser.clearData();
-		cache.setCache(await parser.parseWorkspace());
-	});
-}
 
-// Diagnostic of errors, warnings, infos and hints
-function addDiagnostic(diagnosticCollection: vscode.DiagnosticCollection) {
-    vscode.workspace.onDidChangeTextDocument((event) => {
-        const text = event.document.getText();
 
-        let errors = text.matchAll(/ERROR/gi);
-		let warnings = text.matchAll(/WARN/gi);
-		let infos = text.matchAll(/INFO/gi);
-		let hints = text.matchAll(/HINT/gi);
 
-		let items: any[] = [];
-		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Error, "This is ERROR hover", errors, event));
-		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Warning, "This is WARNING hover", warnings, event));
-		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Information, "This is INFO hover", infos, event));
-		items = items.concat(addDiagnosticItems(vscode.DiagnosticSeverity.Hint, "This is HINT hover", hints, event));
-		
-		diagnosticCollection.set(event.document.uri, items);
-    });
-}
+	// Handle extensions being added or removed
+    vscode.extensions.onDidChange(() => {
+        parserConfig.updateLanguagesDefinitions();
+    }, null, context.subscriptions);
 
-function addDiagnosticItems(kind: vscode.DiagnosticSeverity, message: string, mathItems: IterableIterator<RegExpMatchArray>, event: vscode.TextDocumentChangeEvent): 
-	vscode.Diagnostic[] {
-
-	let items = [];
-	for (const match of mathItems) {
-		if (match.index === undefined) {
-			return [];
-		}
-		const startPos = event.document.positionAt(match.index);
-		const endPos = event.document.positionAt(match.index + match[0].length);
-		const range = new vscode.Range(startPos, endPos);
-		const diagnostic = new vscode.Diagnostic(range,message, kind);
-		items.push(diagnostic);
-	}
-	if (items.length === 0) {
-		return [];
-	}
-	return items;
+	_registerProviders(context, anotationConfig, parser);
+	_registerCommands(context, anotationConfig, parser);
+	console.log(vscode.workspace.textDocuments);
 }
 
 // This method is called when your extension is deactivated
 export function deactivate() {
 	console.log('Oh no, "entity-inspector" is now deactivated!');
+}
+
+function _registerCommands(
+	context: vscode.ExtensionContext, 
+    anotationConfig: AnotationConfiguration,
+	parser: AnnotationParser): 
+void {
+	const commands = new CommandsConfiguration();
+	const exportModelHandler = async () => {
+		console.log("Activated 'export model', exporting...");
+		//await exportModel(storage.getCache());
+	};
+
+	context.subscriptions.push(vscode.commands.registerCommand(commands.exportModel, exportModelHandler));
+
+	const runParserHandler = async () => {
+		vscode.window.withProgress({
+			location: ProgressLocation.Notification,
+			cancellable: true,
+			title: 'Parsing'
+		}, async (progress, token) => {
+			token.onCancellationRequested(() => {
+                console.log("User canceled the parsing");
+            });
+			anotationModel = await parser.parseWorkspace(progress, token);
+			progress.report({message: "exorting model to annotation-model.json"});
+			await exportModel(anotationModel, "annotation-model.json");
+			instanceModel = await convertAnnotationsToInstances(anotationModel, anotationConfig);
+		});
+	};
+	context.subscriptions.push(vscode.commands.registerCommand(commands.runParser, runParserHandler));
+}
+
+function _registerProviders(
+	context: vscode.ExtensionContext, 
+	anotationConfig: AnnotationReaderConfiguration,
+	parser: AnnotationReaderConfiguration
+): void {
+	context.subscriptions.push(
+		vscode.languages.registerCompletionItemProvider(
+			{pattern: "**"}, // all files
+			new Providers.MarkerProvider(anotationConfig, parser)),
+			
+		vscode.languages.registerInlineCompletionItemProvider(
+			{pattern: "**"},
+			new Providers.SuggestionProvider()),
+	);
 }

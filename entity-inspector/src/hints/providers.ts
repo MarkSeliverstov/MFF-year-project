@@ -1,25 +1,29 @@
 import * as vscode from 'vscode';
+import { AnotationConfiguration } from '../configuration';
+import { AnnotationParser } from '../parser';
 
 export class MarkerProvider implements vscode.CompletionItemProvider {
-    provideCompletionItems(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.CompletionItem[]> {
-        const triggerSuffix = '@ei-';
-        let completionItems: vscode.CompletionItem[] = [];
+    private anotationConfig: AnotationConfiguration;
+    private parser: AnnotationParser;
+    constructor(anotationConfig: AnotationConfiguration, parser: AnnotationParser){
+        this.anotationConfig = anotationConfig;
+        this.parser = parser;
+    }
 
-        // Check if the line starts with the trigger suffix
-		const linePrefix = document.lineAt(position).text.substring(0, position.character);
-		if (!linePrefix.endsWith(triggerSuffix)) {
-			// console.log("Unknown prefix: " + linePrefix);
+    provideCompletionItems(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.CompletionItem[]> {
+        const completionItems: vscode.CompletionItem[] = [];
+
+		const line = document.lineAt(position).text.substring(0, position.character);
+        console.log(line);
+		if (!this.parser.isValidPrefixAnnotationNameInline(line)) {
 			return completionItems;
 		}
-		// console.log("Known prefix: " + linePrefix);
 
-		// Add basic completion items for all languages
-		completionItems.push(
-			new vscode.CompletionItem('class:'),
-			new vscode.CompletionItem('propetry:'),
-			new vscode.CompletionItem('method:'),
-            new vscode.CompletionItem('description:'),
-		);
+        this.anotationConfig.prefixValues.forEach(prefixVal => {
+            completionItems.push(
+                new vscode.CompletionItem(prefixVal),
+            );
+        }); 
 		
 		return completionItems;
     }
@@ -32,7 +36,7 @@ export class SuggestionProvider implements vscode.InlineCompletionItemProvider {
             new vscode.Range(position.with(undefined, 0), position)
         );
         
-        let suggestionItems: vscode.InlineCompletionItem[] = [];
+        const suggestionItems: vscode.InlineCompletionItem[] = [];
         if (textBeforeCursor.endsWith('mySugg')) {
             suggestionItems.push(
                 new vscode.InlineCompletionItem('estion\nThis is the first of sugg.\nyou can change it option + ] or [', new vscode.Range(position, position.translate(0, 10))),
