@@ -1,14 +1,14 @@
 import * as vscode from 'vscode';
-import {AnnotationParser} from './parser';
+import {AnnotationReader} from './parser';
 import * as Providers from './hints/providers';
 // import { exportModel } from './modeling/export';
-import { AnotationModel, InstanceModel } from './model';
+import { AnnotationModel, InstanceModel } from './model';
 import { AnnotationMarkersConfiguration, AnnotationReaderConfiguration, CommandsConfiguration } from './configuration';
 import { ProgressLocation } from 'vscode';
-import { convertAnotationsToInstances as convertAnnotationsToInstances } from './converter';
+import { createInstanceModel as convertAnnotationsToInstances } from './converter';
 import { exportModel } from './exporter';
 
-let anotationModel: AnotationModel;
+let anotationModel: AnnotationModel;
 let instanceModel: InstanceModel;
 
 // This method is called when your extension is activated
@@ -17,7 +17,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	const parserConfig = new AnnotationReaderConfiguration();
 	const anotationConfig = new AnnotationMarkersConfiguration();
 
-	const parser = new AnnotationParser(parserConfig, anotationConfig);
+	const reader = new AnnotationReader(parserConfig, anotationConfig);
 
 
 
@@ -40,9 +40,8 @@ export async function activate(context: vscode.ExtensionContext) {
         parserConfig.updateLanguagesDefinitions();
     }, null, context.subscriptions);
 
-	_registerProviders(context, anotationConfig, parser);
-	_registerCommands(context, anotationConfig, parser);
-	console.log(vscode.workspace.textDocuments);
+	_registerProviders(context, anotationConfig, reader);
+	_registerCommands(context, anotationConfig, reader);
 }
 
 // This method is called when your extension is deactivated
@@ -52,8 +51,8 @@ export function deactivate() {
 
 function _registerCommands(
 	context: vscode.ExtensionContext, 
-    anotationConfig: AnotationConfiguration,
-	parser: AnnotationParser): 
+    anotationConfig: AnnotationMarkersConfiguration,
+	reader: AnnotationReader): 
 void {
 	const commands = new CommandsConfiguration();
 	const exportModelHandler = async () => {
@@ -72,10 +71,11 @@ void {
 			token.onCancellationRequested(() => {
                 console.log("User canceled the parsing");
             });
-			anotationModel = await parser.parseWorkspace(progress, token);
+			anotationModel = await reader.parseWorkspace(progress, token);
 			progress.report({message: "exorting model to annotation-model.json"});
-			await exportModel(anotationModel, "annotation-model.json");
-			instanceModel = await convertAnnotationsToInstances(anotationModel, anotationConfig);
+            console.log(JSON.stringify(anotationModel));
+			//await exportModel(anotationModel, "annotation-model.json");
+			//instanceModel = await convertAnnotationsToInstances(anotationModel, anotationConfig);
 		});
 	};
 	context.subscriptions.push(vscode.commands.registerCommand(commands.runParser, runParserHandler));
@@ -83,13 +83,13 @@ void {
 
 function _registerProviders(
 	context: vscode.ExtensionContext, 
-	anotationConfig: AnnotationReaderConfiguration,
-	parser: AnnotationReaderConfiguration
+	anotationConfig: AnnotationMarkersConfiguration,
+	reader: AnnotationReader
 ): void {
 	context.subscriptions.push(
 		vscode.languages.registerCompletionItemProvider(
 			{pattern: "**"}, // all files
-			new Providers.MarkerProvider(anotationConfig, parser)),
+			new Providers.MarkerProvider(anotationConfig, reader)),
 			
 		vscode.languages.registerInlineCompletionItemProvider(
 			{pattern: "**"},

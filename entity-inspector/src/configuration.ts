@@ -21,13 +21,13 @@ export class AnnotationMarkersConfiguration{
 
     static readonly prefixValues = () => {
         return [
-            AnnotationMarkersConfiguration.idMarker,
-            AnnotationMarkersConfiguration.nameMarker,
-            AnnotationMarkersConfiguration.typeMarker,
-            AnnotationMarkersConfiguration.entityMarker,
-            AnnotationMarkersConfiguration.propertyMarker,
-            // AnnotationMarkersConfiguration.methodMarker,
-            AnnotationMarkersConfiguration.descriptionMarker
+            AnnotationMarkersConfiguration.idMarker(),
+            AnnotationMarkersConfiguration.nameMarker(),
+            AnnotationMarkersConfiguration.typeMarker(),
+            AnnotationMarkersConfiguration.entityMarker(),
+            AnnotationMarkersConfiguration.propertyMarker(),
+            // AnnotationMarkersConfiguration.methodMarker(),
+            AnnotationMarkersConfiguration.descriptionMarker()
         ];
     };
 }

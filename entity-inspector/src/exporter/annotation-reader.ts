@@ -74,7 +74,6 @@ export class AnnotationReader{
         // if it's plain text, we have to do mutliline regex to catch the start of the line with ^
         const regexFlags = (this.isPlainText) ? "igm" : "ig";
         const regEx = new RegExp(this.prefixRegexExpression, regexFlags);
-
         let match;
         const annotations : IAnnotation[] = [];
         while ((match = regEx.exec(text.toString()))) {
@@ -93,7 +92,7 @@ export class AnnotationReader{
         }
 
         return {
-            relativeFilePath: sourceFile.path,
+            relativeFilePath: vscode.workspace.asRelativePath(sourceFile.path),
             annotations: annotations
         };
     }
@@ -122,7 +121,7 @@ export class AnnotationReader{
         }
         
         // Apply all configurable comment start tags
-        const prefixName = this.annotationConfiguration.prefixName;
+        const prefixName = this.annotationConfiguration.prefixName();
         this.prefixRegexExpression += `${prefixName}+(.*)`;
     }
 
@@ -185,5 +184,5 @@ export class AnnotationReader{
     }
 }
 function lineNumberByIndex(index: number, text: string): number {
-    throw new Error('Function not implemented.');
+    return 0;
 }
