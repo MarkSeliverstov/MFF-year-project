@@ -597,3 +597,39 @@ index.ts pro soubory
 
 languages for parser - https://code.visualstudio.com/docs/languages/identifiers
 helpfull comments parser example - https://github.com/aaron-bond/better-comments
+
+# 11.09.2023
+
+Bc. temata: 
+- Connecting code artifacts
+- 
+
+## Notes:
+popsat koncepty -intellisense, generovani kodu, staticka analyza .... (v intro)
+popsat proc VScode
+
+5-7 Vet, zadani: 
+- problem
+- vlaste reseni
+- co vlaste udelam - napisu extenssion
+
+# Zadani
+
+Title:
+- Linking Code Artefacts
+- Propojení Artefaktů Kódu
+
+Zadani:
+S rostoucí složitostí softwarových projektů a jejich kódových základů vzniká stále naléhavější potřeba efektivního řízení. 
+
+Je klíčové umožnit propojení různých částí kódu, a to i v různých programovacích jazycích, aby výsledkem byla pohodlná a efektivní navigace v rámci projektu.
+
+K tomu by se mohly využít komentáře v kódu, které mohou být považovány za tzv. artefakty. 
+
+Tyto komentáře by mohly obsahovat informace o objektech v kódu, což by následně umožnilo jejich použití při analýze projektu, konstrukci modelu, přidání nápovědy a dokonce i automatické tvorbě entit. 
+
+
+Komentáře v kódu by tak sloužily jako významné značky, které by umožnily lépe identifikovat a propojovat různé části kódu a entit v rámci projektu.
+
+Cílem této bakalářské práce je zkoumání a navržení nástroje nebo rozšíření pro integrovaný vývojový prostředek (IDE), které umožní vývojářům efektivně propojovat a spravovat různé artefakty kódu v rámci jejich projektů.
+
