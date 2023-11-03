@@ -20,7 +20,7 @@
     "editor.lineNumbers": "on",
     "editor.showFoldingControls": "never",
     "editor.suggest.showStatusBar": false,
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": false,
     "gitlens.statusBar.enabled": true,

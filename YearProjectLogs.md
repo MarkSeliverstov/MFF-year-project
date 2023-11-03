@@ -614,4 +614,4 @@ Rozšíření pro Visual Studio Code (VS Code) se zdá být výbornou volbou pro
 VS Code je oblíbeným vývojovým prostředím, kterého používá široké spektrum vývojářů a má velmi aktivní komunitu. 
 Celkově by rozšíření pro VS Code bylo skvělou platformou pro realizaci mého nápadu na propojení artefaktů kódu.
 
--> [continue](./BachelorProjectLogs.md) (in Bachelor Logs)
+-> [continue in bachelor work]((https://github.com/MarkSeliverstov/MFF-bachelor-work/tree/main))
