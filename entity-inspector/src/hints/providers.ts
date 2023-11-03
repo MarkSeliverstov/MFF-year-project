@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { AnotationConfiguration } from '../configuration';
-import { AnnotationParser } from '../parser';
+import { AnnotationMarkersConfiguration } from '../configuration';
+import { AnnotationReader } from '../exporter';
 
 export class MarkerProvider implements vscode.CompletionItemProvider {
     private anotationConfig: AnotationConfiguration;

@@ -33,16 +33,15 @@ export class AnnotationMarkersConfiguration{
 }
 
 
-
 /**
  * Awesome parser configuring 
  * helps to determine the format of languages using the installed extensions.
  */
 export class AnnotationReaderConfiguration{
     // languageId : Comment configuration
-    private readonly commentConfig = new Map<string, CommentConfig | undefined>();
-    private readonly languageConfigFiles = new Map<string, string>();
-    private readonly languageExtensionToId = new Map<string, string>();
+    private readonly commentConfig = new Map<LanguageId, CommentConfig | undefined>();
+    private readonly languageConfigFiles = new Map<LanguageId, ConfigPath>();
+    private readonly languageExtensionToLanguageId = new Map<LanguageExtenssion, LanguageId>();
 
     public constructor() {
         this.updateLanguagesDefinitions();
@@ -63,14 +62,13 @@ export class AnnotationReaderConfiguration{
                     if (language.configuration) {
                         try{
                             for (const extension of language.extensions){
-                                this.languageExtensionToId.set(extension, language.id);
+                                this.languageExtensionToLanguageId.set(extension, language.id);
                             }
                         }
                         catch{ // if no extensions property in the language
                             continue;
                         }
                         const configPath = path.join(extension.extensionPath, language.configuration);
-                        console.log(`${extension.extensionPath}\n${language.configuration}\n${configPath}\n`);
                         this.languageConfigFiles.set(language.id, configPath);
                     }
                 }
@@ -82,7 +80,7 @@ export class AnnotationReaderConfiguration{
      */
     public async getCommentConfigurationByExtension(extension: string): 
     Promise<CommentConfig | undefined> {
-        const languageId = this.languageExtensionToId.get(extension);
+        const languageId = this.languageExtensionToLanguageId.get(extension);
         if (languageId !== undefined){
             return await this.getCommentConfiguration(languageId);
         }

@@ -1,7 +1,13 @@
 import * as vscode from 'vscode';
 
 import { AnnotationMarkersConfiguration, AnnotationReaderConfiguration } from '../configuration';
-import { InstanceModel, Entity, IAnnotation, SourceFileAnnotations, EntityInstance } from "../model";
+import { 
+    InstanceModel, 
+    Entity, 
+    IAnnotation, 
+    SourceFileAnnotations, 
+    EntityInstance 
+} from "../model";
 import {AnnotationReader} from '../exporter';
 import { AnnotationModel } from '../model/annotation-model';
 
@@ -10,29 +16,21 @@ let entities: Entity[];
 /**
  * Load annotations and convert them into entities and properties.
  */
-export async function createInstanceModel(): Promise<InstanceModel> {
-    const paths = await vscode.workspace.findFiles("*");
-    entities = [];
+export async function createInstanceModel(annotationsModel: AnnotationModel): Promise<InstanceModel> {
     // Creates entities from each file
-    paths.forEach(async (path) => {
-        const reader = new AnnotationReader(
-            new AnnotationReaderConfiguration, 
-            new AnnotationMarkersConfiguration
-        );
-        const sourceFileAnnotations = await reader.readAnnotationsFromFile(path);
-        if (sourceFileAnnotations !== null) {
-            entities.concat(createEntities(sourceFileAnnotations));
-        }
+    annotationsModel.filesAnnotations.forEach(sorceFileAnnotations => {
+        entities.concat(createEntities(sorceFileAnnotations));
     });
 
     return {entities};
 }
 
 /**
- * Creates entities from source annotations
+ * Creates entities from source annotations.
  */
 function createEntities(sourceFileAnnotations: SourceFileAnnotations): Entity[] {
     const annotations = sourceFileAnnotations.annotations;
+    // make sure that annotations are sorted.
     annotations.sort((a: IAnnotation, b:IAnnotation) => a.lineNumber - b.lineNumber);
 
     const entities: Entity[] = [];

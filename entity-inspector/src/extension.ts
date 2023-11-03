@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {AnnotationReader} from './parser';
+import { AnnotationReader } from './exporter';
 import * as Providers from './hints/providers';
 // import { exportModel } from './modeling/export';
 import { AnnotationModel, InstanceModel } from './model';
@@ -18,22 +18,6 @@ export async function activate(context: vscode.ExtensionContext) {
 	const anotationConfig = new AnnotationMarkersConfiguration();
 
 	const reader = new AnnotationReader(parserConfig, anotationConfig);
-
-
-
-
-
-	// const anotations: AnotationModel = parser.parseWorkspace();
-
-	//const storage = new Storage();
-	
-	//_registerCommands(context, parser, storage);
-	//_registerProviders(context);
-
-
-
-
-
 
 	// Handle extensions being added or removed
     vscode.extensions.onDidChange(() => {
