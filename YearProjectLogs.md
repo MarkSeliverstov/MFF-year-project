@@ -1,4 +1,4 @@
-# Diary of the project
+# Diary of the Year Project
 
 ### Usefull links:
 
@@ -490,11 +490,11 @@ How it works:
 
 Next tasks:
 
-- [ ] Edit text
-- [ ] Add use case for comparsion
+- [x] Edit text
+- [x] Add use case for comparsion
 - [x] Section 1.1-3 to one section
-- [ ] Wildcards in comparsion
-- [ ] Feature based architecture [FBA](https://maestros.io/structure-by-type-vs-feature)
+- [x] Wildcards in comparsion
+- [x] Feature based architecture [FBA](https://maestros.io/structure-by-type-vs-feature)
 
 model - EIclass a separate
 settings - samostatne
@@ -598,38 +598,20 @@ index.ts pro soubory
 languages for parser - https://code.visualstudio.com/docs/languages/identifiers
 helpfull comments parser example - https://github.com/aaron-bond/better-comments
 
-# 11.09.2023
-
-Bc. temata: 
-- Connecting code artifacts
-- 
-
-## Notes:
-popsat koncepty -intellisense, generovani kodu, staticka analyza .... (v intro)
-popsat proc VScode
-
-5-7 Vet, zadani: 
-- problem
-- vlaste reseni
-- co vlaste udelam - napisu extenssion
 
 # Zadani
-
-Title:
+s
+Nazev:
 - Linking Code Artefacts
 - Propojení Artefaktů Kódu
 
 Zadani:
 S rostoucí složitostí softwarových projektů a jejich kódových základů vzniká stále naléhavější potřeba efektivního řízení. 
-
 Je klíčové umožnit propojení různých částí kódu, a to i v různých programovacích jazycích, aby výsledkem byla pohodlná a efektivní navigace v rámci projektu.
-
 K tomu by se mohly využít komentáře v kódu, které mohou být považovány za tzv. artefakty. 
-
 Tyto komentáře by mohly obsahovat informace o objektech v kódu, což by následně umožnilo jejich použití při analýze projektu, konstrukci modelu, přidání nápovědy a dokonce i automatické tvorbě entit. 
+Rozšíření pro Visual Studio Code (VS Code) se zdá být výbornou volbou pro realizaci tohoto nápadu. 
+VS Code je oblíbeným vývojovým prostředím, kterého používá široké spektrum vývojářů a má velmi aktivní komunitu. 
+Celkově by rozšíření pro VS Code bylo skvělou platformou pro realizaci mého nápadu na propojení artefaktů kódu.
 
-
-Komentáře v kódu by tak sloužily jako významné značky, které by umožnily lépe identifikovat a propojovat různé části kódu a entit v rámci projektu.
-
-Cílem této bakalářské práce je zkoumání a navržení nástroje nebo rozšíření pro integrovaný vývojový prostředek (IDE), které umožní vývojářům efektivně propojovat a spravovat různé artefakty kódu v rámci jejich projektů.
-
+-> [continue](./BachelorProjectLogs.md) (in Bachelor Logs)
